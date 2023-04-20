@@ -16,18 +16,12 @@ class HomeController extends Controller
      */
     public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $articles = BlogArticle::search(request('query'))->paginate(10);
-        return view('index', compact('articles'));
-    }
+        $articles = BlogArticle::query()->orderBy('created_at', 'DESC')->paginate(32);
 
-    /**
-     * Show blog article
-     *
-     * @return View|Application|Factory|\Illuminate\Contracts\Foundation\Application
-     */
-    public function searchBlogArticles(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
-    {
-        $articles = BlogArticle::search(request('query'))->paginate(10);
+        if(request('query')) {
+            $articles = BlogArticle::search(request('query'))->paginate(32);
+        }
+
         return view('index', compact('articles'));
     }
 
