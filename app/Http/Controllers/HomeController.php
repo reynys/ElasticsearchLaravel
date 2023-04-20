@@ -17,18 +17,26 @@ class HomeController extends Controller
     public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $articles = BlogArticle::search(request('query'))->paginate(10);
-
         return view('index', compact('articles'));
     }
 
+    /**
+     * Show blog article
+     *
+     * @return View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+     */
     public function searchBlogArticles(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        // Search articles through elasticsearch
         $articles = BlogArticle::search(request('query'))->paginate(10);
-
         return view('index', compact('articles'));
     }
 
+    /**
+     * Show blog article
+     *
+     * @param string $articleSlug
+     * @return View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+     */
     public function showBlogArticle($articleSlug): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $article = BlogArticle::where('slug', $articleSlug)->firstOrFail();
